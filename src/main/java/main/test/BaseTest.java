@@ -25,6 +25,12 @@ public class BaseTest {
 
     public static BankAccount donaldAccount;
     public static BankAccount dagobertAccount;
+    public static BankAccount daisyAccount;
+
+    public String donaldAuth = AuthToken.getAuthToken(client, "donald", "donald");
+    public String dagobertAuth = AuthToken.getAuthToken(client, "dagobert", "dagobert");
+    public String daisyAuth = AuthToken.getAuthToken(client, "daisy", "daisy");
+    public String adminAuth = AuthToken.getAdminLoginToken(client);
 
     @BeforeClass
     public static void setUp(){
@@ -70,6 +76,22 @@ public class BaseTest {
         dagobertAccount.setPinCard((String) JsonPath.read(result, "result.pinCard"));
         dagobertAccount.setPinCode((String) JsonPath.read(result, "result.pinCode"));
 
+        openAccountObject.setName("Daisy");
+        openAccountObject.setSsn("123456799");
+        openAccountObject.setEmail("daisy@gamil.com");
+        openAccountObject.setUsername("daisy");
+        openAccountObject.setPassword("daisy");
+
+        result = client.processRequest(openAccount, openAccountObject);
+        assertThat(result, hasJsonPath("result"));
+        assertThat(result, hasJsonPath("result.iBAN"));
+        assertThat(result, hasJsonPath("result.pinCard"));
+        assertThat(result, hasJsonPath("result.pinCode"));
+
+        daisyAccount = new BankAccount();
+        daisyAccount.setiBAN((String) JsonPath.read(result, "result.iBAN"));
+        daisyAccount.setPinCard((String) JsonPath.read(result, "result.pinCard"));
+        daisyAccount.setPinCode((String) JsonPath.read(result, "result.pinCode"));
     }
 
 }
