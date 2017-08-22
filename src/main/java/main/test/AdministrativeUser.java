@@ -10,7 +10,7 @@ import static main.util.Methods.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class AdministrateUser extends BaseTest {
+public class AdministrativeUser extends BaseTest {
 
     private String authToken = AuthToken.getAdminLoginToken(client);
 

@@ -194,6 +194,7 @@ public class SpendingLimits extends BaseTest {
         result = client.processRequest(transferMoney, transferMoneyObject);
         checkError(result, INVALID_PARAM_VALUE_ERROR);
 
+        // transfer 2000 again
         transferMoneyObject.setAmount(2000);
         result = client.processRequest(transferMoney, transferMoneyObject);
         checkSuccess(result);

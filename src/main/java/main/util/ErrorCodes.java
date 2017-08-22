@@ -7,7 +7,7 @@ public class ErrorCodes {
     public static final int NO_EFFECT_ERROR = 420;
     public static final int INVALID_PIN_ERROR = 421;
     public static final int AUTHENTICATION_ERROR = 422;
-//    public static final int ACCOUNT_FROZEN = 423;
+    public static final int ACCOUNT_FROZEN_ERROR = 423;
     public static final int OTHER_ERROR = 500;
     public static final int PARSE_ERROR = -32700;
     public static final int INVALID_REQUEST_ERROR = -32600;
