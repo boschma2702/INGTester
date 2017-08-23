@@ -3,6 +3,7 @@ package main.test;
 import com.jayway.jsonpath.JsonPath;
 import main.client.IClient;
 import main.model.BankAccount;
+import main.model.methods.GetDate;
 import main.model.methods.OpenAccount;
 import main.model.methods.Reset;
 import main.model.methods.SimulateTime;
@@ -11,10 +12,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 
+import java.util.Calendar;
+
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
-import static main.util.Methods.openAccount;
-import static main.util.Methods.reset;
-import static main.util.Methods.simulateTime;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
+import static main.util.CalendarUtil.getCalenderOfString;
+import static main.util.CalendarUtil.getDaysTillNextFirstOfMonth;
+import static main.util.Checker.checkSuccess;
+import static main.util.Methods.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -92,6 +97,21 @@ public class BaseTest {
         daisyAccount.setiBAN((String) JsonPath.read(result, "result.iBAN"));
         daisyAccount.setPinCard((String) JsonPath.read(result, "result.pinCard"));
         daisyAccount.setPinCode((String) JsonPath.read(result, "result.pinCode"));
+    }
+
+    /**
+     * Simulates to the first next first of the month.
+     */
+    public void simulateToFirstOfMonth(){
+        String result = client.processRequest(getDate, new GetDate());
+        assertThat(result, hasJsonPath("result"));
+        assertThat(result, hasNoJsonPath("error"));
+        assertThat(result, hasJsonPath("result.date"));
+        Calendar calendar = getCalenderOfString((String) JsonPath.read(result, "result.date"));
+
+        //simulate the days
+        result = client.processRequest(simulateTime, new SimulateTime(getDaysTillNextFirstOfMonth(calendar), AuthToken.getAdminLoginToken(client)));
+        checkSuccess(result);
     }
 
 }

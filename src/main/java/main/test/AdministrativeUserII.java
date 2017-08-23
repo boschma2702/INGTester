@@ -23,7 +23,7 @@ public class AdministrativeUserII extends BaseTest {
      */
     @Test
     public void transferMoney(){
-        //make sure dagobert has 1 fund
+        //make sure donald has 1.23 funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(donaldAccount.getiBAN(), donaldAccount.getPinCard(), donaldAccount.getPinCode(), 1.23));
         checkSuccess(result);
