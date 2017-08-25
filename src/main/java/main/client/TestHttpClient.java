@@ -17,17 +17,20 @@ import static main.util.JsonRpcBuilder.getJsonRpc;
 
 public class TestHttpClient implements IClient {
 
-    // TODO: Replace below with the location of your web application/service
-    public static final String SERVICE_URL = "http://localhost:8080/api";
+    private String url;
 
     public static final HttpClient httpClient = HttpClientBuilder.create().build();
 
     private int requestCount = 0;
 
+    public TestHttpClient(String url) {
+        this.url = url;
+    }
+
     public String processRequest(Methods method, Object object) {
         try {
             requestCount++;
-            HttpPost request = new HttpPost(SERVICE_URL);
+            HttpPost request = new HttpPost(url);
             request.setHeader("content-type", "application/json");
             request.setEntity(new StringEntity(getJsonRpc(method.name(), object)));
             HttpResponse response = httpClient.execute(request);

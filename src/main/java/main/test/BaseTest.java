@@ -1,6 +1,7 @@
 package main.test;
 
 import com.jayway.jsonpath.JsonPath;
+import main.TestSuite;
 import main.client.IClient;
 import main.model.BankAccount;
 import main.model.methods.*;

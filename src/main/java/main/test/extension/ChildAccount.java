@@ -1,8 +1,9 @@
-package main.test;
+package main.test.extension;
 
 import com.jayway.jsonpath.JsonPath;
 import main.model.BankAccount;
 import main.model.methods.*;
+import main.test.BaseTest;
 import main.util.AuthToken;
 import main.util.CalendarUtil;
 import org.junit.Test;

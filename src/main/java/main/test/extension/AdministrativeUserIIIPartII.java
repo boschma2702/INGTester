@@ -1,6 +1,7 @@
-package main.test;
+package main.test.extension;
 
 import main.model.methods.*;
+import main.test.BaseTest;
 import main.util.AuthToken;
 import org.junit.Test;
 

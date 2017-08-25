@@ -1,9 +1,10 @@
-package main.test;
+package main.test.extension;
 
 import main.model.methods.DepositIntoAccount;
 import main.model.methods.OpenSavingsAccount;
 import main.model.methods.SetValue;
 import main.model.methods.TransferMoney;
+import main.test.BaseTest;
 import main.util.AuthToken;
 import org.junit.Test;
 

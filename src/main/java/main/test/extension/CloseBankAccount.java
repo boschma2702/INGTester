@@ -1,7 +1,8 @@
-package main.test;
+package main.test.extension;
 
 import com.jayway.jsonpath.JsonPath;
 import main.model.methods.*;
+import main.test.BaseTest;
 import org.junit.Test;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;

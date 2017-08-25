@@ -1,7 +1,8 @@
-package main.test;
+package main;
 
 import main.client.IClient;
 import main.client.TestHttpClient;
+import main.test.extension.*;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,7 +18,10 @@ import org.junit.runners.Suite;
         SpendingLimits.class})
 public class TestSuite {
 
-    public static IClient client = new TestHttpClient();
+    //TODO change to http or socket client
+    public static IClient client = new TestHttpClient("YOUR URL");
+//    public static IClient client = new SocketClient();
+
 
     @AfterClass
     public static void printRequestCount() {
