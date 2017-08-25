@@ -69,7 +69,7 @@ public class AdministrativeUserIIIPartIIII extends BaseTest{
     public void weeklyLimit(){
         //make sure dagobert has enough funds
         String result = client.processRequest(depositIntoAccount,
-                new DepositIntoAccount(dagobertAccount.getiBAN(), dagobertAccount.getPinCard(), dagobertAccount.getPinCode(), 1000));
+                new DepositIntoAccount(dagobertAccount.getiBAN(), dagobertAccount.getPinCard(), dagobertAccount.getPinCode(), 10000));
         checkSuccess(result);
 
         //set weekly limit to 100
@@ -135,6 +135,7 @@ public class AdministrativeUserIIIPartIIII extends BaseTest{
         checkSuccess(result);
 
         //pay 1000 again with dagobert
+        dagoberTransfer.setAuthToken(AuthToken.getAuthToken(client, "dagobert", "dagobert"));
         result = client.processRequest(transferMoney, dagoberTransfer);
         checkSuccess(result);
     }

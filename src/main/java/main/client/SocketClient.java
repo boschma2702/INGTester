@@ -17,6 +17,8 @@ public class SocketClient implements IClient {
     BufferedReader input = null;
     PrintWriter out = null;
 
+    private int requestCount = 0;
+
     public SocketClient() {
         try {
             s = new Socket(InetAddress.getByName("localhost"), 9090);
@@ -28,6 +30,7 @@ public class SocketClient implements IClient {
     }
 
     public String processRequest(Methods method, Object request) {
+        requestCount ++;
         String requestString = JsonRpcBuilder.getJsonRpc(method.name(), request);
         out.println(requestString);
         try {
@@ -38,5 +41,9 @@ public class SocketClient implements IClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getRequestCount() {
+        return requestCount;
     }
 }
