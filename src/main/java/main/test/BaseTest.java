@@ -3,21 +3,20 @@ package main.test;
 import com.jayway.jsonpath.JsonPath;
 import main.client.IClient;
 import main.model.BankAccount;
-import main.model.methods.GetDate;
-import main.model.methods.OpenAccount;
-import main.model.methods.Reset;
-import main.model.methods.SimulateTime;
+import main.model.methods.*;
 import main.util.AuthToken;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static main.util.CalendarUtil.getCalenderOfString;
 import static main.util.CalendarUtil.getDaysTillNextFirstOfMonth;
+import static main.util.CalendarUtil.sdf;
 import static main.util.Checker.checkSuccess;
 import static main.util.Methods.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -100,6 +99,32 @@ public class BaseTest {
     }
 
     /**
+     * Retrieves the balance of the given IBAN. It retrieves the balance via the admin login
+     * @param IBAN of the account from which to retrieve the balance
+     * @return balance of the account
+     */
+    public double getBalanceOfAccount(String IBAN){
+        String result = client.processRequest(getBalance, new GetBalance(AuthToken.getAdminLoginToken(client), IBAN));
+        assertThat(result, hasJsonPath("result"));
+        assertThat(result, hasNoJsonPath("error"));
+        assertThat(result, hasJsonPath("result.balance"));
+        return JsonPath.read(result, "result.balance");
+    }
+
+    /**
+     * Retrieves the savings balance of the given IBAN. It retrieves the balance via the admin login
+     * @param IBAN of the account from which to retrieve the savings balance
+     * @return balance of the savings account
+     */
+    public double getBalanceOfSavingsAccount(String IBAN) {
+        String result = client.processRequest(getBalance, new GetBalance(AuthToken.getAdminLoginToken(client), IBAN));
+        assertThat(result, hasJsonPath("result"));
+        assertThat(result, hasNoJsonPath("error"));
+        assertThat(result, hasJsonPath("result.savingAccountBalance"));
+        return JsonPath.read(result, "result.savingAccountBalance");
+    }
+
+    /**
      * Simulates to the first next first of the month.
      */
     public void simulateToFirstOfMonth(){
@@ -113,5 +138,53 @@ public class BaseTest {
         result = client.processRequest(simulateTime, new SimulateTime(getDaysTillNextFirstOfMonth(calendar), AuthToken.getAdminLoginToken(client)));
         checkSuccess(result);
     }
+
+    public void simulateToFirstOfYear(){
+        Calendar date = getDate();
+        Calendar target = Calendar.getInstance();
+        target.setTime(date.getTime());
+        target.add(Calendar.YEAR, 1);
+        target.set(Calendar.DAY_OF_MONTH, 1);
+        target.set(Calendar.MONTH, 0);
+        int days = (int) TimeUnit.DAYS.convert(target.getTimeInMillis()-date.getTimeInMillis(), TimeUnit.MILLISECONDS);
+        //simulate the days
+        String result = client.processRequest(simulateTime, new SimulateTime(days, AuthToken.getAdminLoginToken(client)));
+        checkSuccess(result);
+    }
+
+    /**
+     * retrieves the date of the server
+     * @return calender object
+     */
+    public Calendar getDate(){
+        String result = client.processRequest(getDate, new GetDate());
+        assertThat(result, hasJsonPath("result"));
+        assertThat(result, hasNoJsonPath("error"));
+        assertThat(result, hasJsonPath("result.date"));
+        return getCalenderOfString((String) JsonPath.read(result, "result.date"));
+    }
+
+    /**
+     * Returns the date string of the next day on the server in the format yyyy-MM-dd
+     * @return date string representing the next day on the server
+     */
+    public String getDateStringNextDay(){
+        Calendar calendar = getDate();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return sdf.format(calendar.getTime());
+    }
+
+    /**
+     * Returns invalid pin.
+     * @param pinCode
+     * @return
+     */
+    public String getInvalidPin(String pinCode) {
+        if(pinCode.equals("0000")){
+            return "0001";
+        }
+        return "0000";
+    }
+
 
 }

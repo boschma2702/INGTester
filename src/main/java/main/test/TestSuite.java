@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({CreditCard.class, AdministrativeUserII.class, AdministrativeUser.class, SpendingLimits.class})
+@Suite.SuiteClasses({CloseBankAccount.class, AdministrativeUserIII.class, CreditCard.class, AdministrativeUserII.class, AdministrativeUser.class, SpendingLimits.class})
 public class TestSuite {
 
     public static IClient client = new TestHttpClient();
