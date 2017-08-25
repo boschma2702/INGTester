@@ -19,13 +19,13 @@ import static org.junit.Assert.assertThat;
 /**
  * Transfer limit tests
  */
-public class AdministrativeUserIIIPartIIII extends BaseTest{
+public class AdministrativeUserIIIPartIIII extends BaseTest {
 
     /**
      * Test daily limit
      */
     @Test
-    public void dailyLimit(){
+    public void dailyLimit() {
         //set daily transfer limit to 50
         String result = client.processRequest(setValue, new SetValue(AuthToken.getAdminLoginToken(client), DAILY_WITHDRAW_LIMIT, 50, getDateStringNextDay()));
         checkSuccess(result);
@@ -58,7 +58,7 @@ public class AdministrativeUserIIIPartIIII extends BaseTest{
      * Test weekly limit (only takes effect for new accounts
      */
     @Test
-    public void weeklyLimit(){
+    public void weeklyLimit() {
         //make sure dagobert has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(dagobertAccount.getiBAN(), dagobertAccount.getPinCard(), dagobertAccount.getPinCode(), 10000));
@@ -136,7 +136,7 @@ public class AdministrativeUserIIIPartIIII extends BaseTest{
      * Test invalid use of setValue
      */
     @Test
-    public void invalidUse(){
+    public void invalidUse() {
         //today date
         String nextDay = getDateStringNextDay();
         //simulate day

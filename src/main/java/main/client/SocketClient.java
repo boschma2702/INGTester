@@ -30,7 +30,7 @@ public class SocketClient implements IClient {
     }
 
     public String processRequest(Methods method, Object request) {
-        requestCount ++;
+        requestCount++;
         String requestString = JsonRpcBuilder.getJsonRpc(method.name(), request);
         out.println(requestString);
         try {

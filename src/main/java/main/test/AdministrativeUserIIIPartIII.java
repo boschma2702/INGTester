@@ -12,6 +12,7 @@ import static main.util.Methods.*;
 import static main.util.SystemVariableNames.*;
 import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertThat;
+
 /**
  * Tests the interest of the savings accounts
  */
@@ -21,7 +22,7 @@ public class AdministrativeUserIIIPartIII extends BaseTest {
      * interest tests
      */
     @Test
-    public void savingsInterest(){
+    public void savingsInterest() {
         //change interest rate 1 to 10%
         String result = client.processRequest(setValue, new SetValue(AuthToken.getAdminLoginToken(client), INTEREST_RATE_1, 0.1, getDateStringNextDay()));
         checkSuccess(result);
@@ -53,7 +54,7 @@ public class AdministrativeUserIIIPartIII extends BaseTest {
 
         //book to savings of donald
         result = client.processRequest(transferMoney,
-                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN()+"S", "me", 25000, "Time to save"));
+                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN() + "S", "me", 25000, "Time to save"));
         checkSuccess(result);
 
         //open savings account for daisy
@@ -67,7 +68,7 @@ public class AdministrativeUserIIIPartIII extends BaseTest {
 
         //book to savings
         result = client.processRequest(transferMoney,
-                new TransferMoney(daisyAuth, daisyAccount.getiBAN(), daisyAccount.getiBAN()+"S", "me", 50000, "Time to save"));
+                new TransferMoney(daisyAuth, daisyAccount.getiBAN(), daisyAccount.getiBAN() + "S", "me", 50000, "Time to save"));
         checkSuccess(result);
 
         //open savings of dagobert
@@ -81,7 +82,7 @@ public class AdministrativeUserIIIPartIII extends BaseTest {
 
         //book to savings
         result = client.processRequest(transferMoney,
-                new TransferMoney(dagobertAuth, dagobertAccount.getiBAN(), dagobertAccount.getiBAN()+"S", "me", 1000000, "Time to save"));
+                new TransferMoney(dagobertAuth, dagobertAccount.getiBAN(), dagobertAccount.getiBAN() + "S", "me", 1000000, "Time to save"));
         checkSuccess(result);
 
         //simulate year
@@ -89,17 +90,16 @@ public class AdministrativeUserIIIPartIII extends BaseTest {
 
         //check donald has balance of -+ 27.5k (1% offset allowed)
         double balance = getBalanceOfSavingsAccount(donaldAccount.getiBAN());
-        assertThat(balance, closeTo(27500, 27500*0.01));
+        assertThat(balance, closeTo(27500, 27500 * 0.01));
 
         //check daisy has balance of -+ 55k (1% offset allowed
         balance = getBalanceOfSavingsAccount(daisyAccount.getiBAN());
-        assertThat(balance, closeTo(55000, 55000*0.01));
+        assertThat(balance, closeTo(55000, 55000 * 0.01));
 
         //check dagobert has balance of 1.1M (1% offset allowed
         balance = getBalanceOfSavingsAccount(dagobertAccount.getiBAN());
-        assertThat(balance, closeTo(1100000, 1000000*0.01));
+        assertThat(balance, closeTo(1100000, 1000000 * 0.01));
     }
-
 
 
 }

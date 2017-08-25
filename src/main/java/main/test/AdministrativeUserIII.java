@@ -29,7 +29,7 @@ public class AdministrativeUserIII extends BaseTest {
      * credit card monthly fee
      */
     @Test
-    public void monthlyFee(){
+    public void monthlyFee() {
         //simulate to first of month
         simulateToFirstOfMonth();
 
@@ -55,7 +55,7 @@ public class AdministrativeUserIII extends BaseTest {
         simulateToFirstOfMonth();
 
         //check if balance is balance-9.99
-        assertThat(balance-9.99, equalTo(getBalanceOfAccount(dagobertAccount.getiBAN())));
+        assertThat(balance - 9.99, equalTo(getBalanceOfAccount(dagobertAccount.getiBAN())));
 
         //set value with to much decimals
         result = client.processRequest(setValue, new SetValue(AuthToken.getAdminLoginToken(client), CREDIT_CARD_MONTHLY_FEE, 9.999, getDateStringNextDay()));
@@ -67,7 +67,7 @@ public class AdministrativeUserIII extends BaseTest {
      * credit card credit
      */
     @Test
-    public void monthlyCredit(){
+    public void monthlyCredit() {
         //make sure donald has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(donaldAccount.getiBAN(), donaldAccount.getPinCard(), donaldAccount.getPinCode(), 100));
@@ -98,7 +98,7 @@ public class AdministrativeUserIII extends BaseTest {
 
         //try to pay 50.01
         PayFromAccount payFromAccountObject =
-                new PayFromAccount(donaldAccount.getiBAN()+"C", dagobertAccount.getiBAN(), pinCard, pinCode, 50.01);
+                new PayFromAccount(donaldAccount.getiBAN() + "C", dagobertAccount.getiBAN(), pinCard, pinCode, 50.01);
         result = client.processRequest(payFromAccount, payFromAccountObject);
         checkError(result, INVALID_PARAM_VALUE_ERROR);
 
@@ -116,7 +116,7 @@ public class AdministrativeUserIII extends BaseTest {
      * Card expiration length
      */
     @Test
-    public void expirationLength(){
+    public void expirationLength() {
         //set length to 2 years
         String result = client.processRequest(setValue, new SetValue(AuthToken.getAdminLoginToken(client), CARD_EXPIRATION_LENGTH, 2, getDateStringNextDay()));
         checkSuccess(result);
@@ -143,7 +143,7 @@ public class AdministrativeUserIII extends BaseTest {
         assertThat(result, hasNoJsonPath("error"));
         assertThat(result, hasJsonPath("result.date"));
         Calendar currentCalendar = CalendarUtil.getCalenderOfString((String) JsonPath.read(result, "result.date"));
-        assertEquals(2, expirationCalendar.get(Calendar.YEAR)-currentCalendar.get(Calendar.YEAR));
+        assertEquals(2, expirationCalendar.get(Calendar.YEAR) - currentCalendar.get(Calendar.YEAR));
 
         //request creditCard
         result = client.processRequest(requestCreditCard, new RequestCreditCard(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN()));
@@ -152,10 +152,10 @@ public class AdministrativeUserIII extends BaseTest {
         assertThat(result, hasJsonPath("result.pinCard"));
         assertThat(result, hasJsonPath("result.expirationDate"));
         expirationCalendar = CalendarUtil.getCalenderOfString((String) JsonPath.read(result, "result.expirationDate"));
-        assertEquals(2, expirationCalendar.get(Calendar.YEAR)-currentCalendar.get(Calendar.YEAR));
+        assertEquals(2, expirationCalendar.get(Calendar.YEAR) - currentCalendar.get(Calendar.YEAR));
 
         //close creditCard
-        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN() + "C"));
         checkSuccess(result);
 
         //close additional account
@@ -171,7 +171,7 @@ public class AdministrativeUserIII extends BaseTest {
      * new card costs
      */
     @Test
-    public void newCardCosts(){
+    public void newCardCosts() {
         //make sure daisy has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(daisyAccount.getiBAN(), daisyAccount.getPinCard(), daisyAccount.getPinCode(), 100));
@@ -202,7 +202,7 @@ public class AdministrativeUserIII extends BaseTest {
 
         //get balance
         double newBalance = getBalanceOfAccount(daisyAccount.getiBAN());
-        assertThat(balance-newBalance, equalTo(1.5));
+        assertThat(balance - newBalance, equalTo(1.5));
 
         //replace credit card
         result = client.processRequest(invalidateCard,
@@ -213,10 +213,10 @@ public class AdministrativeUserIII extends BaseTest {
         //get balance
         balance = newBalance;
         newBalance = getBalanceOfAccount(daisyAccount.getiBAN());
-        assertThat(balance-newBalance, equalTo(1.5));
+        assertThat(balance - newBalance, equalTo(1.5));
 
         //close credit account
-        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN() + "C"));
         checkSuccess(result);
 
         //try to set with to much decimals

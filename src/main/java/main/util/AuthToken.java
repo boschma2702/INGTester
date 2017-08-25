@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class AuthToken {
 
-    public static String getAuthToken(IClient client, String username, String password){
+    public static String getAuthToken(IClient client, String username, String password) {
         String loginResult = client.processRequest(getAuthToken, new GetAuthToken(username, password));
         assertThat(loginResult, hasJsonPath("result"));
         assertThat(loginResult, hasNoJsonPath("error"));
@@ -21,7 +21,7 @@ public class AuthToken {
         return JsonPath.read(loginResult, "result.authToken");
     }
 
-    public static String getAdminLoginToken(IClient client){
+    public static String getAdminLoginToken(IClient client) {
         return getAuthToken(client, ADMIN_USERNAME, ADMIN_PASSWORD);
     }
 

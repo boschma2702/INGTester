@@ -8,7 +8,7 @@ public class JsonRpcObject {
     private String method;
     private Object params;
 
-    public void setObject(String method, Object params){
+    public void setObject(String method, Object params) {
         this.method = method;
         this.params = params;
     }

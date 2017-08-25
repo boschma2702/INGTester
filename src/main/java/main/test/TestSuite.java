@@ -20,7 +20,7 @@ public class TestSuite {
     public static IClient client = new TestHttpClient();
 
     @AfterClass
-    public static void printRequestCount(){
+    public static void printRequestCount() {
         System.out.println(String.format("Test done executing. %s request were sent.", client.getRequestCount()));
     }
 

@@ -21,7 +21,7 @@ public class AdministrativeUserII extends BaseTest {
      * Administrative user is allowed to send money from each account
      */
     @Test
-    public void transferMoney(){
+    public void transferMoney() {
         //make sure donald has 1.23 funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(donaldAccount.getiBAN(), donaldAccount.getPinCard(), donaldAccount.getPinCode(), 1.23));
@@ -69,7 +69,7 @@ public class AdministrativeUserII extends BaseTest {
 
         //transfer to savings account
         transferMoneyObject.setSourceIBAN(transferMoneyObject.getTargetIBAN());
-        transferMoneyObject.setTargetIBAN(donaldAccount.getiBAN()+"S");
+        transferMoneyObject.setTargetIBAN(donaldAccount.getiBAN() + "S");
         result = client.processRequest(transferMoney, transferMoneyObject);
         checkSuccess(result);
 
@@ -80,7 +80,7 @@ public class AdministrativeUserII extends BaseTest {
         checkSuccess(result);
 
         //close savings account
-        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN()+"S"));
+        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN() + "S"));
         checkSuccess(result);
     }
 
@@ -88,7 +88,7 @@ public class AdministrativeUserII extends BaseTest {
      * Check if transfer account access works
      */
     @Test
-    public void transferAccountAccess(){
+    public void transferAccountAccess() {
         // transfer dagobert account to daisy
         String result = client.processRequest(transferBankAccount, new TransferBankAccount(adminAuth, dagobertAccount.getiBAN(), "daisy"));
         checkSuccess(result);
@@ -131,7 +131,7 @@ public class AdministrativeUserII extends BaseTest {
      * Checks wrong inputs for transferAccountAccess
      */
     @Test
-    public void wrongTransferAccount(){
+    public void wrongTransferAccount() {
         //non admin auth
         String result = client.processRequest(transferBankAccount, new TransferBankAccount(donaldAuth, donaldAccount.getiBAN(), "daisy"));
         checkError(result, NOT_AUTHORIZED_ERROR);
@@ -157,7 +157,7 @@ public class AdministrativeUserII extends BaseTest {
      * checks frozen account
      */
     @Test
-    public void freezeAccount(){
+    public void freezeAccount() {
         //make sure donald has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(donaldAccount.getiBAN(), donaldAccount.getPinCard(), donaldAccount.getPinCode(), 10));
@@ -170,7 +170,7 @@ public class AdministrativeUserII extends BaseTest {
 
         //make sure savings account has 1 fund
         result = client.processRequest(transferMoney,
-                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN()+"S", "me", 1, "To savings"));
+                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN() + "S", "me", 1, "To savings"));
         checkSuccess(result);
 
         //open credit card account
@@ -218,7 +218,7 @@ public class AdministrativeUserII extends BaseTest {
 
         //try to transfer to savings with donald account
         TransferMoney transferMoneyObject =
-                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN()+"S", "me", 1, "Booking");
+                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN() + "S", "me", 1, "Booking");
         result = client.processRequest(transferMoney, transferMoneyObject);
         checkError(result, ACCOUNT_FROZEN_ERROR);
 
@@ -306,11 +306,11 @@ public class AdministrativeUserII extends BaseTest {
         checkError(result, ACCOUNT_FROZEN_ERROR);
 
         //try to close savingsaccount
-        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN()+"S"));
+        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN() + "S"));
         checkError(result, ACCOUNT_FROZEN_ERROR);
 
         //try to close creditCard
-        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN() + "C"));
         checkError(result, ACCOUNT_FROZEN_ERROR);
 
         //unfreeze donald account
@@ -323,11 +323,11 @@ public class AdministrativeUserII extends BaseTest {
         checkSuccess(result);
 
         //close savingsaccount
-        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN()+"S"));
+        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN() + "S"));
         checkSuccess(result);
 
         //close creditCard
-        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(donaldAuth, donaldAccount.getiBAN() + "C"));
         checkSuccess(result);
     }
 
@@ -335,7 +335,7 @@ public class AdministrativeUserII extends BaseTest {
      * check frozen customer
      */
     @Test
-    public void frozenCustomer(){
+    public void frozenCustomer() {
         //make sure daisy has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(daisyAccount.getiBAN(), daisyAccount.getPinCard(), daisyAccount.getPinCode(), 10));
@@ -382,7 +382,7 @@ public class AdministrativeUserII extends BaseTest {
      * Check invalid messages to setFreezeUserAccount
      */
     @Test
-    public void freezeInvalidInput(){
+    public void freezeInvalidInput() {
         SetFreezeUserAccount setFreezeUserAccountObject = new SetFreezeUserAccount(donaldAuth, "donald", true);
 
         //non admin freeze attempt

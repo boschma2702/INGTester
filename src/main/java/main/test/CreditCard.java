@@ -22,7 +22,7 @@ public class CreditCard extends BaseTest {
      * check request and close process
      */
     @Test
-    public void requestCloseCheck(){
+    public void requestCloseCheck() {
         //check if getBalance returns no credit field
         String result = client.processRequest(getBalance, new GetBalance(AuthToken.getAuthToken(client, "donald", "donald"), donaldAccount.getiBAN()));
         assertThat(result, hasJsonPath("result"));
@@ -55,7 +55,7 @@ public class CreditCard extends BaseTest {
         assertThat(result, hasJsonPath("result.length()", equalTo(2)));
 
         //close credit card
-        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "donald", "donald"), donaldAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "donald", "donald"), donaldAccount.getiBAN() + "C"));
         checkSuccess(result);
 
         //balance should remain unchanged
@@ -69,7 +69,7 @@ public class CreditCard extends BaseTest {
      * Daily use of credit card (paying and costs)
      */
     @Test
-    public void transfer(){
+    public void transfer() {
         //simulate to first of month
         simulateToFirstOfMonth();
 
@@ -89,7 +89,7 @@ public class CreditCard extends BaseTest {
 
         //pay 1.23 to donald
         result = client.processRequest(payFromAccount,
-                new PayFromAccount(daisyAccount.getiBAN()+"C", donaldAccount.getiBAN(), pinCard, pinCode, 1.23));
+                new PayFromAccount(daisyAccount.getiBAN() + "C", donaldAccount.getiBAN(), pinCard, pinCode, 1.23));
         checkSuccess(result);
 
         //simulate to next of first month
@@ -104,11 +104,11 @@ public class CreditCard extends BaseTest {
 
         //pay 10 to donald
         result = client.processRequest(payFromAccount,
-                new PayFromAccount(daisyAccount.getiBAN()+"C", donaldAccount.getiBAN(), pinCard, pinCode, 10));
+                new PayFromAccount(daisyAccount.getiBAN() + "C", donaldAccount.getiBAN(), pinCard, pinCode, 10));
         checkSuccess(result);
 
         //close creditCard
-        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN()+"C"));
+        result = client.processRequest(closeAccount, new CloseAccount(AuthToken.getAuthToken(client, "daisy", "daisy"), daisyAccount.getiBAN() + "C"));
         checkSuccess(result);
 
         //check if balance is -6.23-10 and credit field is gone
@@ -123,7 +123,7 @@ public class CreditCard extends BaseTest {
      * (mis)use of creditCard and request process
      */
     @Test
-    public void misuse(){
+    public void misuse() {
         //make sure dagobert has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(dagobertAccount.getiBAN(), dagobertAccount.getPinCard(), dagobertAccount.getPinCode(), 10000));
@@ -171,7 +171,7 @@ public class CreditCard extends BaseTest {
 
         //try to pay from not activated credit card
         PayFromAccount payFromAccountObject =
-                new PayFromAccount(dagobertAccount.getiBAN()+"C", donaldAccount.getiBAN(), pinCard, pinCode, 1);
+                new PayFromAccount(dagobertAccount.getiBAN() + "C", donaldAccount.getiBAN(), pinCard, pinCode, 1);
         result = client.processRequest(payFromAccount, payFromAccountObject);
         checkError(result, INVALID_PARAM_VALUE_ERROR);
 
@@ -186,7 +186,7 @@ public class CreditCard extends BaseTest {
 
         //pay from account to creditCard
         payFromAccountObject.setSourceIBAN(dagobertAccount.getiBAN());
-        payFromAccountObject.setTargetIBAN(dagobertAccount.getiBAN()+"C");
+        payFromAccountObject.setTargetIBAN(dagobertAccount.getiBAN() + "C");
         result = client.processRequest(payFromAccount, payFromAccountObject);
         checkError(result, INVALID_PARAM_VALUE_ERROR);
 
@@ -216,7 +216,7 @@ public class CreditCard extends BaseTest {
 
         //pay three times with wrong pin
         payFromAccountObject.setPinCode("0");
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             result = client.processRequest(payFromAccount, payFromAccountObject);
             checkError(result, INVALID_PIN_ERROR);
         }
@@ -275,7 +275,7 @@ public class CreditCard extends BaseTest {
 
         //close credit card account
         result = client.processRequest(closeAccount,
-                new CloseAccount(AuthToken.getAuthToken(client, "dagobert", "dagobert"), dagobertAccount.getiBAN()+"C"));
+                new CloseAccount(AuthToken.getAuthToken(client, "dagobert", "dagobert"), dagobertAccount.getiBAN() + "C"));
         checkSuccess(result);
 
         //try to pay with credit card
@@ -287,7 +287,7 @@ public class CreditCard extends BaseTest {
      * try to pay with expired card and request new one and pay with that one
      */
     @Test
-    public void expiration(){
+    public void expiration() {
         //make sure dagobert has enough funds
         String result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(dagobertAccount.getiBAN(), dagobertAccount.getPinCard(), dagobertAccount.getPinCode(), 1000000));
@@ -350,11 +350,10 @@ public class CreditCard extends BaseTest {
 
         //close credit card
         result = client.processRequest(closeAccount,
-                new CloseAccount(AuthToken.getAuthToken(client, "dagobert", "dagobert"), dagobertAccount.getiBAN()+"C"));
+                new CloseAccount(AuthToken.getAuthToken(client, "dagobert", "dagobert"), dagobertAccount.getiBAN() + "C"));
         checkSuccess(result);
 
     }
-
 
 
 }

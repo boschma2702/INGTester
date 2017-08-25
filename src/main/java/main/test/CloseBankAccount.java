@@ -24,7 +24,7 @@ public class CloseBankAccount extends BaseTest {
      * close credit and savings
      */
     @Test
-    public void close(){
+    public void close() {
         //open credit
         String result = client.processRequest(requestCreditCard, new RequestCreditCard(donaldAuth, donaldAccount.getiBAN()));
         assertThat(result, hasJsonPath("result"));
@@ -46,7 +46,7 @@ public class CloseBankAccount extends BaseTest {
         checkError(result, NOT_AUTHORIZED_ERROR);
 
         //close credit
-        closeAccountObject.setiBAN(donaldAccount.getiBAN()+"C");
+        closeAccountObject.setiBAN(donaldAccount.getiBAN() + "C");
         result = client.processRequest(closeAccount, closeAccountObject);
         checkSuccess(result);
 
@@ -61,11 +61,11 @@ public class CloseBankAccount extends BaseTest {
 
         //book to savings
         result = client.processRequest(transferMoney,
-                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN()+"S", "me", 1, "payment"));
+                new TransferMoney(donaldAuth, donaldAccount.getiBAN(), donaldAccount.getiBAN() + "S", "me", 1, "payment"));
         checkSuccess(result);
 
         //close savings
-        closeAccountObject.setiBAN(donaldAccount.getiBAN()+"S");
+        closeAccountObject.setiBAN(donaldAccount.getiBAN() + "S");
         result = client.processRequest(closeAccount, closeAccountObject);
         checkSuccess(result);
 

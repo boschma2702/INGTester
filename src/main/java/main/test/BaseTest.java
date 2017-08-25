@@ -35,7 +35,7 @@ public class BaseTest {
     public String adminAuth = AuthToken.getAdminLoginToken(client);
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() {
         String authToken = AuthToken.getAdminLoginToken(client);
         String result = client.processRequest(simulateTime, new SimulateTime(1, authToken));
         assertThat(result, hasJsonPath("result.length()", equalTo(0)));
@@ -43,13 +43,13 @@ public class BaseTest {
     }
 
     @AfterClass
-    public static void reset(){
+    public static void reset() {
         String authToken = AuthToken.getAdminLoginToken(client);
         String result = client.processRequest(reset, new Reset(authToken));
         assertThat(result, hasJsonPath("result.length()", equalTo(0)));
     }
 
-    public static void addDefaultUsers(){
+    public static void addDefaultUsers() {
         OpenAccount openAccountObject = new OpenAccount("Donald", "Duck", "D.", "1934-6-9", "123456798", "1313 Webfoot Walk, Duckburg", "+316 12345678", "donald@gmail.com", "donald", "donald");
         String result = client.processRequest(openAccount, openAccountObject);
         assertThat(result, hasJsonPath("result"));
@@ -98,10 +98,11 @@ public class BaseTest {
 
     /**
      * Retrieves the balance of the given IBAN. It retrieves the balance via the admin login
+     *
      * @param IBAN of the account from which to retrieve the balance
      * @return balance of the account
      */
-    public double getBalanceOfAccount(String IBAN){
+    public double getBalanceOfAccount(String IBAN) {
         String result = client.processRequest(getBalance, new GetBalance(AuthToken.getAdminLoginToken(client), IBAN));
         assertThat(result, hasJsonPath("result"));
         assertThat(result, hasNoJsonPath("error"));
@@ -111,6 +112,7 @@ public class BaseTest {
 
     /**
      * Retrieves the savings balance of the given IBAN. It retrieves the balance via the admin login
+     *
      * @param IBAN of the account from which to retrieve the savings balance
      * @return balance of the savings account
      */
@@ -125,7 +127,7 @@ public class BaseTest {
     /**
      * Simulates to the first next first of the month.
      */
-    public void simulateToFirstOfMonth(){
+    public void simulateToFirstOfMonth() {
         String result = client.processRequest(getDate, new GetDate());
         assertThat(result, hasJsonPath("result"));
         assertThat(result, hasNoJsonPath("error"));
@@ -137,14 +139,14 @@ public class BaseTest {
         checkSuccess(result);
     }
 
-    public void simulateToFirstOfYear(){
+    public void simulateToFirstOfYear() {
         Calendar date = getDate();
         Calendar target = Calendar.getInstance();
         target.setTime(date.getTime());
         target.add(Calendar.YEAR, 1);
         target.set(Calendar.DAY_OF_MONTH, 1);
         target.set(Calendar.MONTH, 0);
-        int days = (int) TimeUnit.DAYS.convert(target.getTimeInMillis()-date.getTimeInMillis(), TimeUnit.MILLISECONDS);
+        int days = (int) TimeUnit.DAYS.convert(target.getTimeInMillis() - date.getTimeInMillis(), TimeUnit.MILLISECONDS);
         //simulate the days
         String result = client.processRequest(simulateTime, new SimulateTime(days, AuthToken.getAdminLoginToken(client)));
         checkSuccess(result);
@@ -152,9 +154,10 @@ public class BaseTest {
 
     /**
      * retrieves the date of the server
+     *
      * @return calender object
      */
-    public Calendar getDate(){
+    public Calendar getDate() {
         String result = client.processRequest(getDate, new GetDate());
         assertThat(result, hasJsonPath("result"));
         assertThat(result, hasNoJsonPath("error"));
@@ -164,9 +167,10 @@ public class BaseTest {
 
     /**
      * Returns the date string of the next day on the server in the format yyyy-MM-dd
+     *
      * @return date string representing the next day on the server
      */
-    public String getDateStringNextDay(){
+    public String getDateStringNextDay() {
         Calendar calendar = getDate();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         return sdf.format(calendar.getTime());
@@ -174,11 +178,12 @@ public class BaseTest {
 
     /**
      * Returns invalid pin.
+     *
      * @param pinCode
      * @return
      */
     public String getInvalidPin(String pinCode) {
-        if(pinCode.equals("0000")){
+        if (pinCode.equals("0000")) {
             return "0001";
         }
         return "0000";

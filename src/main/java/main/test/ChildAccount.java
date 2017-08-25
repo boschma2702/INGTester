@@ -31,7 +31,7 @@ public class ChildAccount extends BaseTest {
      * check 18 year switch
      */
     @Test
-    public void childAccount(){
+    public void childAccount() {
         //get date and retrieve birthday of 10 year olds
         Calendar calendar = getDate();
         calendar.add(Calendar.YEAR, -10);
@@ -124,11 +124,11 @@ public class ChildAccount extends BaseTest {
 
         //check kwak balance (1% offset allowed)
         double balance = getBalanceOfAccount(kwakAccount.getiBAN());
-        assertThat(balance, closeTo(1.02017*1000, 0.01*1.02017*1000));
+        assertThat(balance, closeTo(1.02017 * 1000, 0.01 * 1.02017 * 1000));
 
         //check kwik account balance (only until 2.5k should be calculated)
         balance = getBalanceOfAccount(kwikAccount.getiBAN());
-        assertThat(balance, closeTo(0.02017*2500+10000, 0.02017*2500*0.1));
+        assertThat(balance, closeTo(0.02017 * 2500 + 10000, 0.02017 * 2500 * 0.1));
 
         //retrieve kwak auth
         String kwakAuth = AuthToken.getAuthToken(client, "kwak", "young");
@@ -158,7 +158,7 @@ public class ChildAccount extends BaseTest {
         checkError(result, NOT_ALLOWED_ERROR);
 
         //simulate 8 times until first of next year
-        for(int i=0; i<8; i++){
+        for (int i = 0; i < 8; i++) {
             simulateToFirstOfYear();
         }
         //check access of kwak of donald
@@ -208,7 +208,7 @@ public class ChildAccount extends BaseTest {
      * invalid use of openAccount
      */
     @Test
-    public void invalidUse(){
+    public void invalidUse() {
         OpenAccountGuardian openAccountGuardian =
                 new OpenAccountGuardian("Kwek", "Duck", "K.", "1990-1-1", "1261561", "Somewhere", "06519159624", "kwik@gmail.com", "kwek", "young", "child", new String[]{"donald"});
         //open child account with non minor
