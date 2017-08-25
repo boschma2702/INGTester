@@ -6,8 +6,6 @@ import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import static org.junit.Assert.assertThat;
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ChildAccount.class,
         AdministrativeUserIII.class, AdministrativeUserIIIPartII.class, AdministrativeUserIIIPartIII.class, AdministrativeUserIIIPartIIII.class,

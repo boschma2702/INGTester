@@ -8,19 +8,16 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import static main.util.Methods.depositIntoAccount;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.ErrorCodes.*;
-import static main.util.SystemVariableNames.*;
-import static org.hamcrest.Matchers.equalTo;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
+import static main.util.ErrorCodes.INVALID_PARAM_VALUE_ERROR;
 import static main.util.Methods.*;
-import static org.hamcrest.Matchers.hasSize;
+import static main.util.SystemVariableNames.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static main.util.Methods.payFromAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 /**
  * This class contains tests for the first 4 system variables. The rest of the tests can be found in AdministrativeUserIIIPartII

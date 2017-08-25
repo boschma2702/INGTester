@@ -1,7 +1,8 @@
 package main.util;
 
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static org.hamcrest.Matchers.equalTo;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class Checker {

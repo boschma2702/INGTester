@@ -5,16 +5,15 @@ import main.model.methods.*;
 import main.util.Constants;
 import org.junit.Test;
 
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.ErrorCodes.*;
-import static org.hamcrest.Matchers.equalTo;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
+import static main.util.ErrorCodes.*;
 import static main.util.Methods.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
-import static main.util.Methods.payFromAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 public class AdministrativeUserII extends BaseTest {
 

@@ -4,25 +4,17 @@ import com.jayway.jsonpath.JsonPath;
 import main.model.methods.*;
 import main.util.AuthToken;
 import org.junit.Test;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
-import static main.util.Checker.checkSuccess;
-import static main.util.Methods.setValue;
-import static main.util.SystemVariableNames.MAX_OVERDRAFT_LIMIT;
-import static main.util.Methods.depositIntoAccount;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.ErrorCodes.*;
-import static main.util.SystemVariableNames.*;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.equalTo;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
+import static main.util.ErrorCodes.INVALID_PARAM_VALUE_ERROR;
+import static main.util.ErrorCodes.NOT_AUTHORIZED_ERROR;
 import static main.util.Methods.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
+import static main.util.SystemVariableNames.DAILY_WITHDRAW_LIMIT;
+import static main.util.SystemVariableNames.WEEKLY_TRANSFER_LIMIT;
 import static org.junit.Assert.assertThat;
-import static main.util.Methods.payFromAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 /**
  * Transfer limit tests

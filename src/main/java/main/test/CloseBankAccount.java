@@ -2,20 +2,16 @@ package main.test;
 
 import com.jayway.jsonpath.JsonPath;
 import main.model.methods.*;
-import main.util.AuthToken;
 import org.junit.Test;
 
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.CalendarUtil.getCalenderOfString;
-import static main.util.CalendarUtil.getDaysTillNextFirstOfMonth;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
 import static main.util.ErrorCodes.*;
 import static main.util.Methods.*;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 /**
  * This test is part of the extension CreditCard. This test tests the closeAccount method.

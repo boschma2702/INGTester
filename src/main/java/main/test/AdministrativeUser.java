@@ -4,7 +4,8 @@ import main.model.methods.*;
 import main.util.AuthToken;
 import org.junit.Test;
 
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static main.util.ErrorCodes.NOT_AUTHORIZED_ERROR;
 import static main.util.Methods.*;
 import static org.hamcrest.Matchers.equalTo;

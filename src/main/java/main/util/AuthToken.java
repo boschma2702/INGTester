@@ -3,12 +3,13 @@ package main.util;
 import com.jayway.jsonpath.JsonPath;
 import main.client.IClient;
 import main.model.methods.GetAuthToken;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
+
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static main.util.Constants.ADMIN_PASSWORD;
 import static main.util.Constants.ADMIN_USERNAME;
-import static org.junit.Assert.assertThat;
-
 import static main.util.Methods.getAuthToken;
+import static org.junit.Assert.assertThat;
 
 public class AuthToken {
 

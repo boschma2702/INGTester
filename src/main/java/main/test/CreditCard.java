@@ -6,21 +6,15 @@ import main.util.AuthToken;
 import main.util.Constants;
 import org.junit.Test;
 
-import java.util.Calendar;
-
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.CalendarUtil.getCalenderOfString;
-import static main.util.CalendarUtil.getDaysTillNextFirstOfMonth;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
-import static main.util.ErrorCodes.INVALID_PARAM_VALUE_ERROR;
-import static main.util.ErrorCodes.INVALID_PIN_ERROR;
-import static main.util.ErrorCodes.NOT_AUTHORIZED_ERROR;
+import static main.util.ErrorCodes.*;
 import static main.util.Methods.*;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 public class CreditCard extends BaseTest {
 

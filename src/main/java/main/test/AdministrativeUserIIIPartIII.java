@@ -1,26 +1,17 @@
 package main.test;
 
-import main.model.methods.*;
+import main.model.methods.DepositIntoAccount;
+import main.model.methods.OpenSavingsAccount;
+import main.model.methods.SetValue;
+import main.model.methods.TransferMoney;
 import main.util.AuthToken;
 import org.junit.Test;
 
 import static main.util.Checker.checkSuccess;
-import static main.util.Methods.setValue;
-import static main.util.SystemVariableNames.MAX_OVERDRAFT_LIMIT;
-import static main.util.Methods.depositIntoAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.ErrorCodes.*;
+import static main.util.Methods.*;
 import static main.util.SystemVariableNames.*;
 import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.equalTo;
-import static main.util.Checker.checkError;
-import static main.util.Checker.checkSuccess;
-import static main.util.Methods.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static main.util.Methods.payFromAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 /**
  * Tests the interest of the savings accounts
  */

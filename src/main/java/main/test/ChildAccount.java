@@ -9,12 +9,11 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
-import static main.util.ErrorCodes.INVALID_PARAM_VALUE_ERROR;
-import static main.util.ErrorCodes.NOT_ALLOWED_ERROR;
-import static main.util.ErrorCodes.NOT_AUTHORIZED_ERROR;
+import static main.util.ErrorCodes.*;
 import static main.util.Methods.*;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;

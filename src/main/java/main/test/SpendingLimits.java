@@ -5,13 +5,12 @@ import main.model.methods.*;
 import main.util.AuthToken;
 import org.junit.Test;
 
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static main.util.Checker.checkError;
 import static main.util.Checker.checkSuccess;
 import static main.util.ErrorCodes.INVALID_PARAM_VALUE_ERROR;
 import static main.util.Methods.*;
 import static org.junit.Assert.assertThat;
-import static main.util.Methods.payFromAccount;
-import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 
 public class SpendingLimits extends BaseTest {
 

@@ -14,9 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
-import static main.util.CalendarUtil.getCalenderOfString;
-import static main.util.CalendarUtil.getDaysTillNextFirstOfMonth;
-import static main.util.CalendarUtil.sdf;
+import static main.util.CalendarUtil.*;
 import static main.util.Checker.checkSuccess;
 import static main.util.Methods.*;
 import static org.hamcrest.Matchers.equalTo;
