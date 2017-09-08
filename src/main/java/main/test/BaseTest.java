@@ -154,6 +154,14 @@ public class BaseTest {
     }
 
     /**
+     * Simulates a single day using a new retrieved admin auth token.
+     */
+    public void simulateDay(){
+        String result = client.processRequest(simulateTime, new SimulateTime(1, AuthToken.getAdminLoginToken(client)));
+        checkSuccess(result);
+    }
+
+    /**
      * retrieves the date of the server
      *
      * @return calender object

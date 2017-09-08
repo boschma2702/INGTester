@@ -34,6 +34,9 @@ public class SpendingLimits extends BaseTest {
         result = client.processRequest(setTransferLimit, new SetTransferLimit(donaldAuth, donaldAccount.getiBAN(), 1));
         checkSuccess(result);
 
+        //simulate day
+        simulateDay();
+
         // pay 1 unit
         PayFromAccount payFromAccountObject = new PayFromAccount(donaldAccount.getiBAN(), dagobertAccount.getiBAN(), donaldAccount.getPinCard(), donaldAccount.getPinCode(), 1);
         result = client.processRequest(payFromAccount, payFromAccountObject);
@@ -44,8 +47,12 @@ public class SpendingLimits extends BaseTest {
         checkError(result, INVALID_PARAM_VALUE_ERROR);
 
         // set limit to 2
+        donaldAuth = AuthToken.getAuthToken(client, "donald", "donald");
         result = client.processRequest(setTransferLimit, new SetTransferLimit(donaldAuth, donaldAccount.getiBAN(), 2));
         checkSuccess(result);
+
+        //simulate day
+        simulateDay();
 
         // pay 1
         result = client.processRequest(payFromAccount, payFromAccountObject);
@@ -59,10 +66,15 @@ public class SpendingLimits extends BaseTest {
      */
     public void differentPayMethod() {
         // set limit to 3
+        donaldAuth = AuthToken.getAuthToken(client, "donald", "donald");
         String result = client.processRequest(setTransferLimit, new SetTransferLimit(donaldAuth, donaldAccount.getiBAN(), 3));
         checkSuccess(result);
 
+        //simulate day
+        simulateDay();
+
         // transfer 1
+        donaldAuth = AuthToken.getAuthToken(client, "donald", "donald");
         TransferMoney transferMoneyObject =
                 new TransferMoney(donaldAuth, donaldAccount.getiBAN(), dagobertAccount.getiBAN(), "Grandpa", 1, "Yet another payment");
         result = client.processRequest(transferMoney, transferMoneyObject);
@@ -147,8 +159,16 @@ public class SpendingLimits extends BaseTest {
      */
     @Test
     public void weeklyReset() {
+        //set limit to 2500
+        daisyAuth = AuthToken.getAuthToken(client, "daisy", "daisy");
+        String result = client.processRequest(setTransferLimit, new SetTransferLimit(daisyAuth, daisyAccount.getiBAN(), 2500));
+        checkSuccess(result);
+
+        //simulate day
+        simulateDay();
+
         // make sure daisy has enough funds
-        String result = client.processRequest(depositIntoAccount,
+        result = client.processRequest(depositIntoAccount,
                 new DepositIntoAccount(daisyAccount.getiBAN(), daisyAccount.getPinCard(), daisyAccount.getPinCode(), 100000));
         checkSuccess(result);
 
@@ -197,6 +217,56 @@ public class SpendingLimits extends BaseTest {
         // transfer 2000 again
         transferMoneyObject.setAmount(2000);
         result = client.processRequest(transferMoney, transferMoneyObject);
+        checkSuccess(result);
+
+        //simluate two months to make sure the weekly limit is restored
+        simulateToFirstOfMonth();
+        simulateToFirstOfMonth();
+    }
+
+    /**
+     * Checks if the spending limit takes effect after simulating a day
+     */
+    @Test
+    public void dayEffect(){
+        daisyAuth = AuthToken.getAuthToken(client, "daisy", "daisy");
+
+        //make sure daisy has enough funds
+        String result = client.processRequest(depositIntoAccount,
+                new DepositIntoAccount(daisyAccount.getiBAN(), daisyAccount.getPinCard(), daisyAccount.getPinCode(), 10));
+        checkSuccess(result);
+
+
+        //set limit to 1
+        result = client.processRequest(setTransferLimit, new SetTransferLimit(daisyAuth, daisyAccount.getiBAN(), 1));
+        checkSuccess(result);
+
+        //simulate day
+        simulateDay();
+
+        //pay 1
+        PayFromAccount payFromAccountObject = new PayFromAccount(daisyAccount.getiBAN(), dagobertAccount.getiBAN(), daisyAccount.getPinCard(), daisyAccount.getPinCode(), 1);
+        result = client.processRequest(payFromAccount, payFromAccountObject);
+        checkSuccess(result);
+
+        //try to pay 1 again
+        result = client.processRequest(payFromAccount, payFromAccountObject);
+        checkError(result, INVALID_PARAM_VALUE_ERROR);
+
+        daisyAuth = AuthToken.getAuthToken(client, "daisy", "daisy");
+        //set limit to 2
+        result = client.processRequest(setTransferLimit, new SetTransferLimit(daisyAuth, daisyAccount.getiBAN(), 2));
+        checkSuccess(result);
+
+        //try to pay 1 again
+        result = client.processRequest(payFromAccount, payFromAccountObject);
+        checkError(result, INVALID_PARAM_VALUE_ERROR);
+
+        //simulate day
+        simulateDay();
+
+        //pay 1 again
+        result = client.processRequest(payFromAccount, payFromAccountObject);
         checkSuccess(result);
     }
 
