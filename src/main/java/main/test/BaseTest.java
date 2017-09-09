@@ -51,7 +51,7 @@ public class BaseTest {
     }
 
     public static void addDefaultUsers() {
-        OpenAccount openAccountObject = new OpenAccount("Donald", "Duck", "D.", "1934-6-9", "123456798", "1313 Webfoot Walk, Duckburg", "+316 12345678", "donald@gmail.com", "donald", "donald");
+        OpenAccount openAccountObject = new OpenAccount("Donald", "Duck", "D.", "1934-6-9", "123456789", "1313 Webfoot Walk, Duckburg", "+316 12345678", "donald@gmail.com", "donald", "donald");
         String result = client.processRequest(openAccount, openAccountObject);
         assertThat(result, hasJsonPath("result"));
         assertThat(result, hasJsonPath("result.iBAN"));
